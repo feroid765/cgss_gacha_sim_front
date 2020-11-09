@@ -1,38 +1,46 @@
-.App {
-  text-align: center;
+.App{
+    width : 100vw;
+    height : 56.25vw;
+    max-height : 100vh;
+    max-width : 177.78vh;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.main{
+    z-index : 0;
+    position : relative;
+    background-size : cover;
+    background-repeat: no-repeat;
+    background-position : center;
+    width : 100%;
+    height : 100%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.gachaList{
+    z-index : 9;
+    position : absolute;
+    top : 5px;
+    left : 5px;
+    opacity: 0.8;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+#doGacha:hover{
+    background: url(./btn_hover.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size : contain;
+    cursor : pointer;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#doGacha{
+    background: url(./btn.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    z-index : 9;
+    position : absolute;
+    bottom : 20px;
+    right : 10px;
+    height : 12vh;
+    width : 25vh;
+    cursor : pointer;
 }

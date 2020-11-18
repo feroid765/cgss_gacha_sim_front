@@ -5,7 +5,7 @@ import './App.css';
 
 const getRandomItemFromArray = (array) => array[Math.floor(Math.random() * array.length)];
 const testURL = "https://cgss-gacha.feroid.com";
-const distURL = "./";
+const distURL = ".";
 
 function App() {
   const [gachaInfo, setGachaInfo] = useState([]);
@@ -21,7 +21,7 @@ function App() {
   }
 
   const getCurrGachaInfo = async () => {
-    var result = await fetch("./api/gachainfo/");
+    var result = await fetch(distURL + "/api/gachainfo/");
     result = await result.json();
     setGachaInfo(result);
   };
@@ -33,7 +33,7 @@ function App() {
       {singleGachaInfo['ID'] + ":" + singleGachaInfo['name']} <br/>
       {singleGachaInfo["ssr_pickup_list"].map(singleGachaInfo => {
         return singleGachaInfo["pickup_list"].map(z=>{
-          return <Image src = {'./img/'+ z } />
+          return <Image src = {distURL + '/img/'+ z } />
         });
       })}
     </Header>);
@@ -56,6 +56,8 @@ function App() {
 
     for(var i in target["ssr_pickup_list"]) candidCards = candidCards.concat(target["ssr_pickup_list"][i]["pickup_list"]);
 
+    if(candidCards.length == 0) candidCards = target["common"]["SSR"];
+
     const randResult = getRandomItemFromArray(candidCards);
     setSelectedGacha(value);
     setMainImg(randResult);
@@ -63,7 +65,7 @@ function App() {
 
   const getCardInfoToHeader = async (cardID) => {
     return(
-      <Card key = {cardID} image = {'./img/'+ cardID}/>
+      <Card key = {cardID} image = {distURL + '/img/'+ cardID}/>
     );
   }
 
@@ -76,17 +78,10 @@ function App() {
     setGachaResultItems(resultsItems);
   }
 
-  const customHeader = (
-    <Menu>
-      <Menu.Item header onClick = {headerOnClick}>데레스테 가챠 시뮬레이터 Beta</Menu.Item>
-    </Menu>
-  );
-
   if(!gachaInfo || gachaInfo.length == 0){
     getCurrGachaInfo();
     return(
       <div className = 'App'>
-        {customHeader}
         <Segment>
           <Loader active inline = "centered" content = '현재 가챠 정보를 가져오는 중..'/>
         </Segment>
@@ -96,7 +91,6 @@ function App() {
   else if(!gachaResultItems || gachaResultItems.length == 0){
     return (
       <div className = 'App'>
-        {customHeader}
         <div className = 'main' style = {{backgroundImage : 'url(https://hidamarirhodonite.kirara.ca/spread/'+ mainImg +'.png)'}}>
           <Dropdown
             className = 'gachaList'
@@ -114,7 +108,6 @@ function App() {
   else{
     return(
       <div className = 'App'>
-        {customHeader}
         <Card.Group itemsPerRow = {5}>
           {gachaResultItems}
         </Card.Group>

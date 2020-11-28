@@ -4,24 +4,17 @@ import doTenGacha from './gacha.js'
 import './App.css';
 
 const getRandomItemFromArray = (array) => array[Math.floor(Math.random() * array.length)];
-const testURL = "https://cgss-gacha.feroid.com";
-const distURL = ".";
+const rootURL = "https://cgss-gacha.feroid.com";
+//const rootURL = ".";
 
 function App() {
   const [gachaInfo, setGachaInfo] = useState([]);
   const [selectedGacha, setSelectedGacha] = useState(undefined);
   const [mainImg, setMainImg] = useState(undefined);
   const [gachaResultItems, setGachaResultItems] = useState([]);
-  
-  const headerOnClick = (e) => {
-    setGachaInfo([]);
-    setSelectedGacha(undefined);
-    setMainImg(undefined);
-    setGachaResultItems([]);
-  }
 
   const getCurrGachaInfo = async () => {
-    var result = await fetch(distURL + "/api/gachainfo/");
+    var result = await fetch(rootURL + "/api/gachainfo/");
     result = await result.json();
     setGachaInfo(result);
   };
@@ -33,7 +26,7 @@ function App() {
       {singleGachaInfo['ID'] + ":" + singleGachaInfo['name']} <br/>
       {singleGachaInfo["ssr_pickup_list"].map(singleGachaInfo => {
         return singleGachaInfo["pickup_list"].map(z=>{
-          return <Image src = {distURL + '/img/'+ z } />
+          return <Image src = {rootURL + '/img/'+ z } />
         });
       })}
     </Header>);
@@ -65,7 +58,7 @@ function App() {
 
   const getCardInfoToHeader = async (cardID) => {
     return(
-      <Card key = {cardID} image = {distURL + '/img/'+ cardID}/>
+      <Card key = {cardID} image = {rootURL + '/img/'+ cardID}/>
     );
   }
 
@@ -91,7 +84,7 @@ function App() {
   else if(!gachaResultItems || gachaResultItems.length == 0){
     return (
       <div className = 'App'>
-        <div className = 'main' style = {{backgroundImage : 'url(https://hidamarirhodonite.kirara.ca/spread/'+ mainImg +'.png)'}}>
+        <div className = 'main' style = {{backgroundImage : mainImg ? 'url(https://hidamarirhodonite.kirara.ca/spread/'+ mainImg +'.png)' : 'none'}}>
           <Dropdown
             className = 'gachaList'
             placeholder='현재 진행되고 있는 가챠 중 선택'
